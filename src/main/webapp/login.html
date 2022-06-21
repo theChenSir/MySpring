@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+    <!--    同步方式实现登录-->
+    <!-- <form action="login.do" method="post">
+        <label for="username">用户名：</label>
+        <input type="text" name="username" id="username">
+
+        <label for="password">密码：</label>
+        <input type="text" name="password" id="password">
+
+        <input type="submit" value="登录">
+    </form>
+    -->
+    <!-- 异步方式实现登录 -->
+    <label for="username">用户名：</label>
+    <input type="text" name="username" id="username">
+
+    <label for="password">密码：</label>
+    <input type="text" name="password" id="password">
+
+    <button id="login-bt">登录</button>
+    <script>
+        $(function(){
+            $("#login-bt").click(function() {
+                // 把username和password拿到
+                var username=$("#username").val();
+                var password=$("#password").val();
+                $.ajax({
+                    type: "POST",
+                    url: "login.do",
+                    data: {"username":username,"password":password},
+                    dataType: "json",
+                    success: function (response) {
+                        console.log('服务器返回的数据：',response);
+                        sessionStorage.setItem("id",response.id);//浏览器关掉，数据消失
+                        sessionStorage.setItem("nick_name",response.nickName);
+                        window.location.href="index.html";
+                    }
+                });
+            })
+        })
+    </script>
+</body>
+</html>

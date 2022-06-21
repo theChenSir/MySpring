@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>权限列表</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <style>
+        table{
+            border:1px solid black;
+            border-collapse: collapse;
+        }
+        th,td{
+            border:1px solid black;
+        }
+    </style>
+</head>
+<body>
+<input type="text"><button>查询</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button>新增</button>
+    <table id="tb">
+        <caption>权限数据</caption>
+        <tr>
+            <th><input type="checkbox">全选</th>
+            <th>菜单名称</th>
+            <th>菜单地址</th>
+            <th>菜单图标</th>
+            <th>操作</th>
+        </tr>
+    </table>
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "permissionList.do",
+            dataType: "json",
+            success: function (data) {
+                console.log('服务器返回的数据：',data);
+                $.each(data,function(index,menu){
+                    var $tr=$("<tr>" +
+                        "<td><input type='checkbox'></td>"+
+                        "<td>"+menu.name+"</td>"+
+                        "<td>"+menu.url+"</td>"+
+                        "<td>"+menu.icon+"</td>"+
+                        "<td><a href='#'>修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='#'>删除</a></td>"+
+                        "</tr>");
+                    $("#tb").append($tr);
+                })
+            }
+        });
+    </script>
+</body>
+</html>

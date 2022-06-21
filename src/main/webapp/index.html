@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/font-awesome.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script>
+        (function () {
+
+            if (!sessionStorage.length) {
+                // 这个调用能触发目标事件，从而达到共享数据的目的
+                localStorage.setItem('getSessionStorage', Date.now());
+            }
+            ;
+
+            // 该事件是核心
+            window.addEventListener('storage', function (event) {
+                if (event.key == 'getSessionStorage') {
+                    // 已存在的标签页会收到这个事件
+                    console.log("ccccccc: ", sessionStorage);
+                    localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+                    localStorage.removeItem('sessionStorage');
+
+                } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+                    // 新开启的标签页会收到这个事件
+                    var data = JSON.parse(event.newValue),
+                        value;
+
+                    for (key in data) {
+                        sessionStorage.setItem(key, data[key]);
+                    }
+                }
+            });
+        })();
+        $(function () {
+
+            console.log("用户ID：" + sessionStorage.getItem("id"))
+            console.log("用户昵称：" + sessionStorage.getItem("nick_name"))
+
+            $("#header").html(sessionStorage.getItem("nick_name"));
+            // 用ajax异步获取菜单
+            $.ajax({
+                type: "get",
+                url: "getUserPermission.do",
+                data: {"userId": sessionStorage.getItem("id")},
+                dataType: "json",
+                success: function (data) {
+                    var arr = new Array();
+                    $.each(data, function (i, permission) {
+                        if (permission.pId) {
+                            arr.push(permission);
+                        }
+                    })
+                    console.log(arr);
+                    $.each(data, function (i, permission) {
+                        if (!permission.pId) {
+                            var $li = $("<li>");
+                            var $a = $("<a>");
+                            $a.html(permission.name);//设置超链接的名称，例如：name是首页
+                            var $i = $("<i>");
+                            $i.addClass("fa " + permission.icon);
+
+                            $a.prepend($i);
+                            $li.append($a);
+                            var $second = $("<ul class=\"submenu\"></ul>");
+                            $.each(arr, function (i, secondPer) {
+                                if (secondPer.pId == permission.id) {
+                                    var $ll = "<li><a href='" + secondPer.url + "' target='" + secondPer.target + "'>" +
+                                        secondPer.name +
+                                        "</a></li>";
+                                    $second.append($ll);
+                                    $li.append($second);
+                                }
+                            })
+                            $(".menu").append($li);
+                        }
+                    });
+                    $(".menu>li a").click(function () {
+                        $(this).next().toggle(300);
+                    })
+                }
+            });
+        })
+    </script>
+    <style>
+        /* 清屏 */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            background-color: antiquewhite;
+            width: 100%;
+            height: 100px;
+        }
+
+        #main {
+            background-color: aquamarine;
+            width: 100%;
+            height: 800px;
+        }
+
+        #aside {
+            width: 15%;
+            background-color: burlywood;
+            height: 100%;
+            float: left;
+        }
+
+        #content {
+            width: 85%;
+            height: 100%;
+            background-color: orchid;
+            float: left;
+        }
+
+        /***************sideBar*********************/
+        li {
+            list-style: none;
+            position: relative;
+            border-style: solid;
+            border-width: 1px 0 0;
+            border-color: #E5E5E5;
+        }
+
+        .submenu > li {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        a {
+            display: block;
+            width: 189px;
+            height: 36px;
+            color: #5d5d5d;
+            text-decoration: none;
+            line-height: 36px;
+        }
+
+        .fa {
+            display: inline-block;
+            margin-left: 14px;
+            margin-right: 14px;
+            font-family: 'FontAwesome';
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .submenu {
+            display: none;
+            position: relative;
+        }
+
+        .submenu:before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 1;
+            left: 18px;
+            top: 0;
+            bottom: 0;
+            border: 1px dotted;
+            border-width: 0 0 0 1px; /* 上 右 下 左 */
+        }
+
+        .submenu > li:before {
+            content: "";
+            display: block;
+            width: 19px;
+            position: absolute;
+            z-index: 1;
+            left: 20px;
+            top: 17px;
+            border: 1px dotted;
+            border-width: 1px 0 0; /* 上 右 下*/
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div id="header">
+    </div>
+    <div id="main">
+        <div id="aside">
+            <!-- 外层ul固定 -->
+            <ul class="menu">
+
+            </ul>
+        </div>
+        <div id="content">
+            <iframe src="" frameborder="0" width="100%" height="100%" name="content"></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>
