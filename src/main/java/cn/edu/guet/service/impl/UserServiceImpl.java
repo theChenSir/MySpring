@@ -4,25 +4,24 @@ import cn.edu.guet.bean.Permission;
 import cn.edu.guet.bean.User;
 import cn.edu.guet.mapper.UserMapper;
 import cn.edu.guet.service.IUserService;
-import cn.edu.guet.util.MyBatisSqlSessionFactory;
 import cn.edu.guet.util.PasswordEncoder;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.List;
 
 public class UserServiceImpl implements IUserService {
 
-    SqlSessionFactory sqlSessionFactory;
-    public UserServiceImpl(){
-        sqlSessionFactory= MyBatisSqlSessionFactory.getInstance().getSqlSessionFactory();
-    }
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public User login(String username, String password) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();// 相当于以前的Connection
-        UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+        System.out.println(userMapper);
         User user=userMapper.login(username,password);
         // UserMapper到底是什么？UserMapper是一个动态代理对象，而且是JDK的动态代理
         // 动态代理：JDK动态代理、CGLIB动态代理
@@ -40,17 +39,12 @@ public class UserServiceImpl implements IUserService {
                 return user;
             }
         }
-        sqlSession.close();
         return null;
     }
 
     @Override
     public List<Permission> getMenuByUserId(String userId) {
-        SqlSession sqlSession=sqlSessionFactory.openSession();// 相当于之前的JDBC的Connection
-        UserMapper userMapper=sqlSession.getMapper(UserMapper.class);// UserMapper相当于JDBC时期的UserDaoImpl类
-
         List<Permission> permissionList = userMapper.getMenuByUserId(userId);
-        sqlSession.close();
         return permissionList;
     }
 }
