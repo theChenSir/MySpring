@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.guet.mapper.PermissionMapper">
+
+    <resultMap id="permissionMap" type="permission">
+        <!-- 菜单自身的信息 -->
+        <id property="id" column="permission_id"/>
+        <result property="name" column="permission_name"/>
+        <result property="pId" column="pid"/>
+        <result property="url" column="url"/>
+        <result property="icon" column="icon"/>
+        <result property="target" column="target"/>
+        <result property="isParent" column="isParent"/>
+    </resultMap>
+
+
+</mapper>

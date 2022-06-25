@@ -1,4 +1,4 @@
-package cn.edu.guet.dao;
+package cn.edu.guet.mapper;
 
 import cn.edu.guet.bean.Permission;
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.guet.mapper.UserMapper">
+
+    <select id="login" resultType="cn.edu.guet.bean.User">
+        SELECT userid as id, nick_name as nickName, password, salt
+        FROM users
+        WHERE username = #{username}
+    </select>
+
+    <select id="getMenuByUserId" resultMap="cn.edu.guet.mapper.PermissionMapper.permissionMap">
+        SELECT p.*
+        FROM user_role ur,
+             role_permission rp,
+             permission p
+        WHERE ur.role_id = rp.role_id
+          AND rp.permission_id = p.permission_id
+          AND user_id = #{value}
+    </select>
+</mapper>

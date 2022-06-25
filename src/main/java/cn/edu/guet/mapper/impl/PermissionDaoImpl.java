@@ -1,7 +1,7 @@
-package cn.edu.guet.dao.impl;
+package cn.edu.guet.mapper.impl;
 
 import cn.edu.guet.bean.Permission;
-import cn.edu.guet.dao.IPermissionDao;
+import cn.edu.guet.mapper.IPermissionDao;
 
 import java.sql.*;
 import java.util.ArrayList;
