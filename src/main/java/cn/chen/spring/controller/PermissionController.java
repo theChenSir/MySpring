@@ -1,4 +1,4 @@
-package cn.edu.guet.controller;
+package cn.chen.spring.controller;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.mvc.annotation.Controller;

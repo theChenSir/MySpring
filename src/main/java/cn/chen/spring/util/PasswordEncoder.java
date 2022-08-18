@@ -1,4 +1,4 @@
-package cn.edu.guet.util;
+package cn.chen.spring.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -122,7 +122,9 @@ public class PasswordEncoder {
         PasswordEncoder encoderMd5 = new PasswordEncoder("c2d2c8b1d841471db18e964a75a3af0f", "MD5");
 
         String encode = encoderMd5.encode("qinshixiang1234");
+        boolean qinshixiang1234 = encoderMd5.matches(encode, "qinshixiang1234");
         System.out.println(encode);
+        System.out.println(qinshixiang1234);
     }
 //	public static void main(String[] args) {
 //		String salt = "helloworld";

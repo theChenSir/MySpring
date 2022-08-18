@@ -1,4 +1,4 @@
-package cn.edu.guet.controller;
+package cn.chen.spring.controller;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.bean.User;
@@ -16,23 +16,19 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    private IUserService userService;
+    private IUserService userServiceImpl;
 
 
     @RequestMapping("/login")
     public User login(String username, String password) {
 
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext("applicationContext.xml");
-        IUserService userService= (IUserService) beanFactory.getBean("userService");
-
-        User user=userService.login(username,password);
+        User user=userServiceImpl.login(username,password);
         System.out.println(user);
         return user;// 返回的JSON数据
     }
     @RequestMapping("/getUserPermission")// 相当于之前在web.xml中的url-pattern的内容
     public List<Permission> getUserPermission(String userId){
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext("applicationContext.xml");
-        IUserService userService= (IUserService) beanFactory.getBean("userService");
-        return userService.getMenuByUserId(userId);
+
+        return userServiceImpl.getMenuByUserId(userId);
     }
 }

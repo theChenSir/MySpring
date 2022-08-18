@@ -1,4 +1,4 @@
-package cn.edu.guet.service.impl;
+package cn.chen.spring.service.impl;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.bean.User;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements IUserService {
 
     @Autowired

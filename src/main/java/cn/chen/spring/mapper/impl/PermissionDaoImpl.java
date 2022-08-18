@@ -1,4 +1,4 @@
-package cn.edu.guet.mapper.impl;
+package cn.chen.spring.mapper.impl;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.mapper.IPermissionDao;
@@ -21,6 +21,10 @@ public class PermissionDaoImpl implements IPermissionDao {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, pwd);
+            ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
+            threadLocal.set(conn);
+            threadLocal.get();
+
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             // rs.next：游标向下移动

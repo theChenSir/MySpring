@@ -1,4 +1,4 @@
-package cn.edu.guet.service.impl;
+package cn.chen.spring.service.impl;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.mapper.IPermissionDao;

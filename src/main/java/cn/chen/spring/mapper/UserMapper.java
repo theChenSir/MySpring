@@ -1,4 +1,4 @@
-package cn.edu.guet.mapper;
+package cn.chen.spring.mapper;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.bean.User;

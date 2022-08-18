@@ -1,4 +1,4 @@
-package cn.edu.guet.mapper;
+package cn.chen.spring.mapper;
 
 public interface PermissionMapper {
 }

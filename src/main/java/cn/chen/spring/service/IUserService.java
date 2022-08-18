@@ -1,4 +1,4 @@
-package cn.edu.guet.service;
+package cn.chen.spring.service;
 
 import cn.edu.guet.bean.Permission;
 import cn.edu.guet.bean.User;
